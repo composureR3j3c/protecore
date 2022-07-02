@@ -20,18 +20,18 @@ const mtproto = new MTProto({
 mtproto.call('help.getNearestDc').then(result => {
   console.log('country:', result.country);
 });
-	getUser()
-	
-async function getUser() {
-  try {
-    const user = await api.call('users.getFullUser', {
-      id: {
-        _: 'inputUserSelf',
-      },
-    });
 
-    return user;
-  } catch (error) {
-    return null;
-  }
+
+function sendCode() {
+  return api.call('auth.sendCode', {
+    phone_number: "+251912356845",
+    settings: {
+      _: 'codeSettings',
+    },
+  });
 }
+
+//for(i=0;i<2;i++){
+ sendCode()
+
+//}
