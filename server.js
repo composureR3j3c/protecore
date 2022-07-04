@@ -1,9 +1,20 @@
 const path = require('path');
 const MTProto = require('@mtproto/core');
-const api= require('./api')
+const api= require('./api');
+
+const bodyParser=require('body-parser')
+const express= require('express');
+
+const phone= "+251912356845"
+// const code= 
+
+const app = express()
+
+app.use(bodyParser.json())
+
 
 const api_id = 15390000;
-const api_hash = "e050c352a7b154ea7c8acce18af6aa41";
+const api_hash = "";
 
 // 1. Create instance
 
@@ -24,14 +35,31 @@ mtproto.call('help.getNearestDc').then(result => {
 
 function sendCode() {
   return api.call('auth.sendCode', {
-    phone_number: "+251912356845",
+    phone_number: "+251983482804",
     settings: {
       _: 'codeSettings',
     },
   });
 }
 
-//for(i=0;i<2;i++){
+
  sendCode()
 
-//}
+// signIn({code:14117,phone:phone,phone_code_hash:14117})
+
+
+function signIn({ code, phone, phone_code_hash }) {
+  return api.call('auth.signIn', {
+    phone_code: code,
+    phone_number: phone,
+    phone_code_hash: phone_code_hash,
+  });
+}
+app.get('/',(req,res)=>{
+  res.send("server UP!")
+})
+
+app.listen(process.env.PORT || 5000, async () =>{
+  console.log("listening on port", 5000 || process.env.PORT)
+  // await init()
+})
